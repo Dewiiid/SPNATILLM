@@ -1,0 +1,171 @@
+# SPNATI-AI Configuration
+# Copy this to settings.yaml and adjust as needed
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+  debug: true
+
+koboldcpp:
+  # KoboldCPP API endpoint
+  url: "http://localhost:5001"
+  # Generation parameters
+  max_length: 300
+  temperature: 0.75
+  top_p: 0.9
+  top_k: 40
+  rep_pen: 1.15
+  # Timeout in seconds for generation requests
+  timeout: 60
+
+comfyui:
+  # ComfyUI API endpoint
+  url: "http://localhost:8188"
+  # Workflow file to use
+  workflow: "comfyui_workflows/character_render.json"
+  # Image output settings
+  width: 512
+  height: 768
+  steps: 25
+  cfg_scale: 7.0
+  sampler: "euler_ancestral"
+  # Timeout in seconds for image generation
+  timeout: 120
+  # Negative prompt appended to all generations
+  negative_prompt: "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, deformed"
+
+chub:
+  # Chub.ai API base URL
+  api_url: "https://api.chub.ai"
+  # Optional API key for authenticated requests
+  api_key: ""
+  # Venus/Mars character card CDN
+  cdn_url: "https://avatars.charhub.io"
+
+game:
+  # Number of AI opponents (1-4)
+  default_opponents: 3
+  # Minimum clothing items per character
+  min_clothing: 5
+  # Maximum clothing items per character
+  max_clothing: 8
+  # Starting chips
+  starting_chips: 100
+  # Small/big blind
+  small_blind: 5
+  big_blind: 10
+
+clothing:
+  # Default clothing set when card doesn't specify enough items
+  # Items are removed top-to-bottom in this order
+  default_set:
+    - name: "jacket"
+      layer: "outerwear"
+      position: "torso"
+      generic: true
+    - name: "shirt"
+      layer: "top"
+      position: "torso"
+      generic: true
+    - name: "pants"
+      layer: "bottom"
+      position: "legs"
+      generic: true
+    - name: "shoes"
+      layer: "footwear"
+      position: "feet"
+      generic: true
+    - name: "socks"
+      layer: "footwear"
+      position: "feet"
+      generic: true
+    - name: "underwear"
+      layer: "underwear"
+      position: "torso"
+      generic: true
+
+  # Keyword mappings for clothing detection in character descriptions
+  category_keywords:
+    outerwear:
+      - jacket
+      - coat
+      - hoodie
+      - blazer
+      - cardigan
+      - vest
+      - cape
+      - cloak
+      - sweater
+      - pullover
+      - parka
+      - windbreaker
+    top:
+      - shirt
+      - blouse
+      - t-shirt
+      - tee
+      - tank top
+      - crop top
+      - tube top
+      - bra
+      - camisole
+      - corset
+      - bustier
+      - bodysuit
+      - sports bra
+      - bikini top
+      - halter
+    bottom:
+      - pants
+      - jeans
+      - shorts
+      - skirt
+      - trousers
+      - leggings
+      - sweatpants
+      - joggers
+      - slacks
+      - miniskirt
+      - bikini bottom
+    underwear:
+      - underwear
+      - panties
+      - boxers
+      - briefs
+      - thong
+      - bra
+      - undershirt
+      - lingerie
+    footwear:
+      - shoes
+      - boots
+      - sneakers
+      - heels
+      - sandals
+      - slippers
+      - socks
+      - stockings
+      - thigh-highs
+    accessories:
+      - hat
+      - cap
+      - glasses
+      - sunglasses
+      - gloves
+      - scarf
+      - tie
+      - bow tie
+      - belt
+      - watch
+      - necklace
+      - earrings
+      - bracelet
+      - headband
+      - ribbon
+      - hairpin
+
+image_cache:
+  # Directory for cached character images
+  directory: "image_cache"
+  # Maximum cache size in MB
+  max_size_mb: 2048

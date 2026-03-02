@@ -1,0 +1,80 @@
+{
+    "3": {
+        "class_type": "KSampler",
+        "inputs": {
+            "cfg": 7.0,
+            "denoise": 1.0,
+            "latent_image": ["5", 0],
+            "model": ["4", 0],
+            "negative": ["7", 0],
+            "positive": ["6", 0],
+            "sampler_name": "euler_ancestral",
+            "scheduler": "normal",
+            "seed": -1,
+            "steps": 25
+        },
+        "_meta": {
+            "title": "KSampler — Main generation node"
+        }
+    },
+    "4": {
+        "class_type": "CheckpointLoaderSimple",
+        "inputs": {
+            "ckpt_name": "PLACEHOLDER"
+        },
+        "_meta": {
+            "title": "Checkpoint Loader — Set your preferred SD model here"
+        }
+    },
+    "5": {
+        "class_type": "EmptyLatentImage",
+        "inputs": {
+            "batch_size": 1,
+            "height": 768,
+            "width": 512
+        },
+        "_meta": {
+            "title": "Latent Image — Portrait aspect ratio (512x768)"
+        }
+    },
+    "6": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+            "clip": ["4", 1],
+            "text": "POSITIVE_PROMPT"
+        },
+        "_meta": {
+            "title": "CLIP Positive — Filled in by SPNATI-AI backend"
+        }
+    },
+    "7": {
+        "class_type": "CLIPTextEncode",
+        "inputs": {
+            "clip": ["4", 1],
+            "text": "NEGATIVE_PROMPT"
+        },
+        "_meta": {
+            "title": "CLIP Negative — Filled in by SPNATI-AI backend"
+        }
+    },
+    "8": {
+        "class_type": "VAEDecode",
+        "inputs": {
+            "samples": ["3", 0],
+            "vae": ["4", 2]
+        },
+        "_meta": {
+            "title": "VAE Decode"
+        }
+    },
+    "9": {
+        "class_type": "SaveImage",
+        "inputs": {
+            "filename_prefix": "spnati_character",
+            "images": ["8", 0]
+        },
+        "_meta": {
+            "title": "Save Image — Output node"
+        }
+    }
+}

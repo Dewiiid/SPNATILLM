@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPNATI-AI — Strip Poker Night</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/game.css">
+</head>
+<body>
+    <!-- ═══ LOBBY SCREEN ═══ -->
+    <div id="screen-lobby" class="screen active">
+        <div class="lobby-container">
+            <header class="lobby-header">
+                <h1 class="logo">SPNATI<span class="logo-accent">—AI</span></h1>
+                <p class="tagline">Strip Poker Night &middot; AI-Generated Characters</p>
+            </header>
+
+            <section class="lobby-section">
+                <h2>Import Characters</h2>
+                <div class="import-controls">
+                    <div class="import-url">
+                        <input type="text" id="chub-url" placeholder="Paste a Chub.ai character URL or slug..." autocomplete="off">
+                        <button id="btn-import-url" class="btn btn-primary">Import</button>
+                    </div>
+                    <div class="import-divider"><span>or</span></div>
+                    <div class="import-file">
+                        <label class="btn btn-secondary" for="card-file-input">
+                            Upload Card (PNG/JSON)
+                        </label>
+                        <input type="file" id="card-file-input" accept=".png,.json" hidden>
+                    </div>
+                    <div class="import-divider"><span>or</span></div>
+                    <div class="import-search">
+                        <input type="text" id="chub-search" placeholder="Search Chub.ai characters..." autocomplete="off">
+                        <button id="btn-search" class="btn btn-secondary">Search</button>
+                    </div>
+                    <div id="search-results" class="search-results" hidden></div>
+                </div>
+            </section>
+
+            <section class="lobby-section">
+                <h2>Your Opponents <span id="opponent-count" class="badge">0</span></h2>
+                <div id="opponent-roster" class="opponent-roster">
+                    <div class="roster-empty">
+                        <p>No characters loaded yet. Import characters above to start playing.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lobby-section lobby-settings">
+                <div class="setting-row">
+                    <label for="player-name">Your Name</label>
+                    <input type="text" id="player-name" value="Player" maxlength="30">
+                </div>
+            </section>
+
+            <div class="lobby-start">
+                <button id="btn-start-game" class="btn btn-start" disabled>
+                    Deal Me In
+                </button>
+            </div>
+
+            <section class="lobby-section lobby-status">
+                <h2>Backend Status</h2>
+                <div id="backend-status" class="status-grid">
+                    <div class="status-item" id="status-kobold">
+                        <span class="status-dot"></span>
+                        <span>KoboldCPP (Dialogue)</span>
+                    </div>
+                    <div class="status-item" id="status-comfyui">
+                        <span class="status-dot"></span>
+                        <span>ComfyUI (Images)</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- ═══ GAME SCREEN ═══ -->
+    <div id="screen-game" class="screen">
+        <div class="game-layout">
+            <!-- Top bar -->
+            <header class="game-header">
+                <div class="round-info">
+                    Round <span id="round-number">0</span>
+                </div>
+                <div class="pot-info">
+                    Pot: <span id="pot-amount">0</span>
+                </div>
+                <div class="game-header-right">
+                    <button id="btn-quit" class="btn btn-sm btn-danger">Quit</button>
+                </div>
+            </header>
+
+            <!-- Opponent area -->
+            <div class="opponents-area" id="opponents-area">
+                <!-- Dynamically populated -->
+            </div>
+
+            <!-- Community cards -->
+            <div class="community-area">
+                <div class="community-cards" id="community-cards">
+                    <!-- Populated during play -->
+                </div>
+            </div>
+
+            <!-- Dialogue overlay -->
+            <div class="dialogue-area" id="dialogue-area">
+                <!-- Shows character dialogue bubbles -->
+            </div>
+
+            <!-- Player area -->
+            <div class="player-area">
+                <div class="player-hand" id="player-hand">
+                    <!-- Player's hole cards -->
+                </div>
+                <div class="player-info">
+                    <span id="player-clothing-desc">Fully clothed</span>
+                </div>
+            </div>
+
+            <!-- Action bar -->
+            <div class="action-bar" id="action-bar" hidden>
+                <button class="btn btn-action btn-fold" data-action="fold">Fold</button>
+                <button class="btn btn-action btn-check" data-action="check">Check</button>
+                <button class="btn btn-action btn-call" data-action="call">Call</button>
+                <button class="btn btn-action btn-raise" data-action="raise">Raise</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ GAME OVER SCREEN ═══ -->
+    <div id="screen-gameover" class="screen">
+        <div class="gameover-container">
+            <h1 id="gameover-title">Game Over</h1>
+            <p id="gameover-message"></p>
+            <button id="btn-new-game" class="btn btn-primary">New Game</button>
+        </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay" hidden>
+        <div class="loading-spinner"></div>
+        <p id="loading-message">Loading...</p>
+    </div>
+
+    <script src="/js/websocket.js"></script>
+    <script src="/js/characters.js"></script>
+    <script src="/js/poker.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
